@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+}
+
+version = '2.1.5-SNAPSHOT'
+description = 'AWS Serverless Java container support - SpringBoot 3 implementation'
+
+java {
+    group = 'com.amazonaws.serverless'
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spring-snapshots'
+        url = uri('https://repo.spring.io/snapshot')
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    maven {
+        name = 'spring-milestones'
+        url = uri('https://repo.spring.io/milestone')
+        mavenContent {
+            releasesOnly()
+        }
+    }
+}
+
+ext {
+    springVersion = '6.2.8'
+    springbootVersion = '3.4.5'
+    springSecurityVersion = '6.4.5'
+}
+
+dependencies {
+    implementation "com.amazonaws.serverless:aws-serverless-java-container-springboot3:2.0.1"
+
+    implementation "org.springframework:spring-webflux:$springVersion"
+    implementation("org.springframework.boot:spring-boot:$springbootVersion") {
+        exclude group: 'org.springframework', module: 'spring-context'
+        exclude group: 'org.springframework', module: 'spring-core'
+    }
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$springbootVersion"
+    implementation "org.springframework:spring-core:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+    implementation("org.springframework:spring-webmvc:$springVersion") {
+        exclude group: 'org.springframework', module: 'spring-aop'
+        exclude group: 'org.springframework', module: 'spring-expression'
+    }
+
+    implementation "jakarta.websocket:jakarta.websocket-api:2.2.0"
+    implementation "jakarta.websocket:jakarta.websocket-client-api:2.2.0"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:3.5.3"
+    testImplementation "org.testcontainers:junit-jupiter:1.19.1"
+    testImplementation "org.junit-pioneer:junit-pioneer:2.2.0"
+}
+
+test {
+    useJUnitPlatform()
+    forkEvery = 1
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

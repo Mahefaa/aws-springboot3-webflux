@@ -1,7 +1,6 @@
 *.class
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.project
@@ -26,9 +25,7 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .gradle/
-gradle/
 build/
-gradlew*
 
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
